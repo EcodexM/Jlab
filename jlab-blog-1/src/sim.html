@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Electron Transfer Simulation</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="simCanvas" width="800" height="500"></canvas>
+
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const atomSpacing = 80;
+        const electronsPerAtom = 3;
+        const initialCharges = 10;
+
+        const atoms = [];
+        const orbitingElectrons = [];
+        const freeElectrons = [];
+
+        class Atom {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.radius = 20;
+                this.electrons = [];
+                this.addElectrons(electronsPerAtom);
+            }
+
+            addElectrons(n) {
+                for (let i = 0; i < n; i++) {
+                    const angle = (i / n) * Math.PI * 2;
+                    this.electrons.push(new OrbitingElectron(this, angle));
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'gray';
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+
+        class OrbitingElectron {
+            constructor(atom, angle) {
+                this.atom = atom;
+                this.angle = angle;
+                this.orbitRadius = 30;
+                this.speed = 0.02 + Math.random() * 0.01;
+                this.active = true;
+            }
+
+            update() {
+                if (this.active) {
+                    this.angle += this.speed;
+                }
+            }
+
+            draw() {
+                const { x, y } = this.getPosition();
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, Math.PI * 2);
+                ctx.fillStyle = 'blue';
+                ctx.fill();
+                ctx.closePath();
+            }
+
+            getPosition() {
+                return {
+                    x: this.atom.x + Math.cos(this.angle) * this.orbitRadius,
+                    y: this.atom.y + Math.sin(this.angle) * this.orbitRadius
+                };
+            }
+
+            takeOver(dx, dy) {
+                this.active = false;
+                freeElectrons.push(new FreeElectron(this.getPosition().x, this.getPosition().y, dx, dy));
+            }
+
+            becomeOrbiting(dx, dy) {
+                this.active = true;
+                this.speed = 0.02 + Math.random() * 0.01;
+            }
+        }
+
+        class FreeElectron {
+            constructor(x, y, dx, dy) {
+                this.x = x;
+                this.y = y;
+                this.dx = dx;
+                this.dy = dy;
+                this.radius = 5;
+                this.active = true;
+            }
+
+            update() {
+                if (!this.active) return;
+
+                this.x += this.dx;
+                this.y += this.dy;
+
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.active = false;
+                }
+
+                // Check collision with orbiting electrons
+                for (let atom of atoms) {
+                    for (let e of atom.electrons) {
+                        if (e.active) {
+                            const pos = e.getPosition();
+                            const dist = Math.hypot(this.x - pos.x, this.y - pos.y);
+                            if (dist < this.radius + 4) {
+                                // Transfer: this electron takes orbit, orbiting electron becomes free
+                                e.takeOver(this.dx, this.dy);
+                                this.x = e.atom.x + Math.cos(e.angle) * e.orbitRadius;
+                                this.y = e.atom.y + Math.sin(e.angle) * e.orbitRadius;
+                                this.dx = 0;
+                                this.dy = 0;
+                                this.active = false;
+                                e.becomeOrbiting();
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+
+            draw() {
+                if (!this.active) return;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'red';
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+
+        function setup() {
+            atoms.length = 0;
+            orbitingElectrons.length = 0;
+            freeElectrons.length = 0;
+
+            const cols = Math.floor(canvas.width / atomSpacing);
+            const rows = Math.floor(canvas.height / atomSpacing);
+
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    const x = i * atomSpacing + atomSpacing / 2;
+                    const y = j * atomSpacing + atomSpacing / 2;
+                    atoms.push(new Atom(x, y));
+                }
+            }
+
+            for (let i = 0; i < initialCharges; i++) {
+                const y = Math.random() * canvas.height;
+                freeElectrons.push(new FreeElectron(10, y, 2, 0));
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let atom of atoms) {
+                atom.draw();
+                for (let e of atom.electrons) {
+                    e.update();
+                    if (e.active) e.draw();
+                }
+            }
+
+            for (let fe of freeElectrons) {
+                fe.update();
+                fe.draw();
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        setup();
+        animate();
+    </script>
+</body>
+
+</html>
