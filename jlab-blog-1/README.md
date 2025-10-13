@@ -1,6 +1,6 @@
-# JLab - Startup Company Website
+# JLab -  Company Website
 
-A modern, responsive startup company website built with HTML, CSS, and JavaScript, integrated with Firebase for contact form management.
+A modern, responsive website built with HTML, CSS, and JavaScript, integrated with Firebase for contact form management.
 
 ## 🚀 Features
 
@@ -118,8 +118,8 @@ MIT License - feel free to use this template for your startup or business.
 
 ## 👨‍💻 Credits
 
-Developed by ecodexm for JLab startup company.
+Developed by ecodexm for JLab.
 
 ---
 
-**Note**: This project was transformed from a Next.js blog application to a pure HTML/CSS/JavaScript startup website for reduced complexity while maintaining modern functionality and Firebase integration.
+**Note**: This project was transformed from a Next.js blog application to a pure HTML/CSS/JavaScript  website 
