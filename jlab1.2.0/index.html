@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JLab - AI Innovation Lab</title>
+    <meta name="description"
+        content="JLab is an AI innovation lab dedicated to discovering and developing practical applications of artificial intelligence that enhance daily activities, improve productivity, and make technology more accessible to everyone.">
+
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+
+    <!-- CSP (Content Security Policy) -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self' https://jlab-ebe8d.firebaseapp.com https://jlab-ebe8d.web.app;">
+
+    <!-- Additional Security -->
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="JLab AI Innovation Lab">
+    <meta name="theme-color" content="#3b82f6">
+    <!-- Inline critical CSS for testing -->
+    <style>
+        /* Critical CSS - should work immediately */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: white;
+            color: #3b82f6;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 0 10px;
+            font-weight: 600;
+        }
+    </style>
+
+    <link rel="stylesheet" href="styles/main.css?v=5">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="logo-simple.svg" alt="JLab Logo" class="logo">
+                <span class="logo-text">JLab</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#services" class="nav-link">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#team" class="nav-link">Team</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Making AI Practical for
+                    <span class="gradient-text">Everyday Life</span>
+                </h1>
+                <p class="hero-description">
+                    JLab is an AI innovation lab dedicated to discovering and developing practical applications of
+                    artificial intelligence that enhance daily activities, improve productivity, and make technology
+                    more accessible to everyone.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">Get Started</a>
+                    <a href="#about" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-card card-1">
+                    <i class="fas fa-brain"></i>
+                    <span>AI Research</span>
+                </div>
+                <div class="floating-card card-2">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Innovation</span>
+                </div>
+                <div class="floating-card card-3">
+                    <i class="fas fa-users"></i>
+                    <span>Human-Centered</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">About JLab</h2>
+                <p class="section-subtitle">Pioneering practical AI applications for everyday life</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Our Mission</h3>
+                    <p>At JLab, we believe artificial intelligence should enhance human capabilities, not replace them.
+                        Our mission is to discover and develop practical AI applications that make everyday activities
+                        more efficient, accessible, and enjoyable for people from all walks of life.</p>
+
+                    <h3>Our Vision</h3>
+                    <p>To be the leading AI innovation lab that bridges the gap between cutting-edge artificial
+                        intelligence research and practical, human-centered applications that improve daily life and
+                        solve real-world challenges.</p>
+
+                    <div class="stats">
+                        <div class="stat">
+                            <h4>15+</h4>
+                            <p>AI Projects</p>
+                        </div>
+                        <div class="stat">
+                            <h4>10K+</h4>
+                            <p>Users Impacted</p>
+                        </div>
+                        <div class="stat">
+                            <h4>3+</h4>
+                            <p>Years Research</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="image-placeholder">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our AI Projects</h2>
+                <p class="section-subtitle">Practical AI applications that enhance everyday life</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>NoteX Learning Platform</h3>
+                    <p class="project-status">✅ Completed Project</p>
+                    <p>An AI-powered learning platform for students of all ages, integrated with advanced learning tools
+                        and personalized AI tutoring. Experience it at <a href="https://vlearn-aaecb.web.app/"
+                            target="_blank" style="color: #3b82f6; text-decoration: underline;">vlearn-aaecb.web.app</a>
+                    </p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>SmartHome AI</h3>
+                    <p class="project-status">🚧 In-Progress</p>
+                    <p>An intelligent home automation system that learns your daily routines and automatically adjusts
+                        lighting, temperature, and security settings for optimal comfort and energy efficiency.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>AI Recipe Assistant</h3>
+                    <p class="project-status">🚧 In-Progress</p>
+                    <p>A smart cooking companion that suggests recipes based on available ingredients, dietary
+                        preferences, and nutritional goals, with step-by-step AI-guided cooking instructions.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>HealthAI Monitor</h3>
+                    <p class="project-status">🚧 In-Progress</p>
+                    <p>Personal health monitoring system that analyzes daily activity patterns, sleep quality, and vital
+                        signs to provide personalized health insights and wellness recommendations.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3>Commute Optimizer</h3>
+                    <p class="project-status">🚧 In-Progress</p>
+                    <p>AI-powered transportation assistant that analyzes traffic patterns, weather conditions, and
+                        personal preferences to suggest the most efficient and comfortable commute routes.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>EcoAI Tracker</h3>
+                    <p class="project-status">🚧 In-Progress</p>
+                    <p>Environmental impact tracker that monitors your daily activities and provides AI-driven
+                        suggestions to reduce carbon footprint and promote sustainable living habits.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our AI Research Team</h2>
+                <p class="section-subtitle">Meet the brilliant minds pioneering practical AI applications</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Dr. Sarah Chen</h3>
+                    <p class="member-role">AI Research Director</p>
+                    <p class="member-bio">Leading AI researcher with expertise in machine learning, natural language
+                        processing, and human-computer interaction. PhD in Computer Science from MIT.</p>
+                    <div class="member-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Dr. Marcus Rodriguez</h3>
+                    <p class="member-role">AI Ethics Specialist</p>
+                    <p class="member-bio">Expert in AI ethics and responsible AI development, ensuring our applications
+                        are fair, transparent, and beneficial to all users. PhD in AI Ethics from Stanford.</p>
+                    <div class="member-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Dr. Emily Watson</h3>
+                    <p class="member-role">Human-AI Interaction Lead</p>
+                    <p class="member-bio">Specialist in designing intuitive AI interfaces that make complex technology
+                        accessible to everyday users. PhD in Human-Computer Interaction from Carnegie Mellon.</p>
+                    <div class="member-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">Ready to start your next project? Let's talk!</p>
+            </div>
+            <div class="contact-content">
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="btn-text">Send Message</span>
+                        <span class="btn-loading" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i> Sending...
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="logo-simple.svg" alt="JLab Logo" class="logo">
+                        <span class="logo-text">JLab</span>
+                    </div>
+                    <p>Pioneering practical AI applications that enhance everyday life and make technology more
+                        accessible to everyone.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#team">Team</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>AI Projects</h4>
+                    <ul>
+                        <li><a href="https://vlearn-aaecb.web.app/" target="_blank">NoteX Learning Platform</a></li>
+                        <li><a href="#">SmartHome AI</a></li>
+                        <li><a href="#">AI Recipe Assistant</a></li>
+                        <li><a href="#">HealthAI Monitor</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <p>Follow our AI research journey and stay updated with our latest innovations in practical AI
+                        applications.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 JLab. All rights reserved. | by ecodexm</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
