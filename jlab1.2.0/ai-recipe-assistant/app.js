@@ -1,246 +1,284 @@
-const recipes = [
-  {
-    id: "carbonara",
-    name: "Spaghetti Carbonara",
-    description: "Silky pasta with pancetta, parmesan, and black pepper.",
-    image:
-      "https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=1000&q=80",
-    servings: 2,
-    time: "25 mins",
-    tags: ["pasta", "quick"],
-    ingredients: [
-      "200 g spaghetti",
-      "100 g pancetta or bacon, diced",
-      "2 eggs + 1 egg yolk",
-      "50 g grated parmesan",
-      "1 garlic clove, smashed",
-      "Fresh black pepper",
-      "Salt for pasta water"
-    ],
-    steps: [
-      "Boil spaghetti in salted water until al dente.",
-      "Crisp pancetta with garlic, then discard garlic.",
-      "Whisk eggs and parmesan with plenty of pepper.",
-      "Toss hot pasta with pancetta off heat.",
-      "Quickly stir in egg mixture for a creamy sauce."
-    ],
-    tips: ["Use the pasta water to loosen the sauce if needed."]
-  },
-  {
-    id: "tikka",
-    name: "Chicken Tikka Masala",
-    description: "Creamy spiced tomato curry with tender chicken.",
-    image:
-      "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=1000&q=80",
-    servings: 4,
-    time: "45 mins",
-    tags: ["chicken", "comfort"],
-    ingredients: [
-      "500 g chicken thighs, cubed",
-      "1 cup yogurt",
-      "2 tbsp garam masala",
-      "1 tbsp grated ginger",
-      "2 garlic cloves, minced",
-      "1 onion, sliced",
-      "1 can crushed tomatoes",
-      "1/2 cup cream",
-      "Salt, chili, and cilantro"
-    ],
-    steps: [
-      "Marinate chicken in yogurt, spices, ginger, and garlic.",
-      "Sear chicken until golden and set aside.",
-      "Cook onion until soft, add tomatoes and simmer.",
-      "Return chicken and finish with cream.",
-      "Serve with rice or naan."
-    ],
-    tips: ["Add a knob of butter for extra richness."]
-  },
-  {
-    id: "stirfry",
-    name: "Veggie Stir Fry",
-    description: "Colorful vegetables with a sweet-savory glaze.",
-    image:
-      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1000&q=80",
-    servings: 2,
-    time: "20 mins",
-    tags: ["vegetarian", "quick"],
-    ingredients: [
-      "1 bell pepper, sliced",
-      "1 cup broccoli florets",
-      "1 carrot, sliced",
-      "150 g mushrooms",
-      "2 tbsp soy sauce",
-      "1 tbsp honey",
-      "1 tsp sesame oil",
-      "1 tbsp minced garlic",
-      "Cooked rice"
-    ],
-    steps: [
-      "Heat oil in a wok and add garlic.",
-      "Stir fry veggies until crisp-tender.",
-      "Whisk soy sauce, honey, and sesame oil.",
-      "Pour sauce over veggies and toss.",
-      "Serve over rice."
-    ],
-    tips: ["Add tofu or shrimp for extra protein."]
-  },
-  {
-    id: "salmon",
-    name: "Lemon Garlic Salmon",
-    description: "Flaky salmon with bright citrus and herbs.",
-    image:
-      "https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=1000&q=80",
-    servings: 2,
-    time: "18 mins",
-    tags: ["seafood", "light"],
-    ingredients: [
-      "2 salmon fillets",
-      "1 tbsp olive oil",
-      "2 garlic cloves, minced",
-      "1 lemon, sliced",
-      "1 tsp dried oregano",
-      "Salt and pepper"
-    ],
-    steps: [
-      "Season salmon with salt, pepper, and oregano.",
-      "Sear in olive oil for 3-4 mins per side.",
-      "Add garlic and lemon slices, spooning oil over fish.",
-      "Cook until flaky.",
-      "Serve with salad or roasted veggies."
-    ],
-    tips: ["Do not overcook; pull when still slightly translucent."]
-  },
-  {
-    id: "pancakes",
-    name: "Classic Pancakes",
-    description: "Fluffy, golden pancakes for any time of day.",
-    image:
-      "https://images.unsplash.com/photo-1495214783159-3503fd1b572d?auto=format&fit=crop&w=1000&q=80",
-    servings: 3,
-    time: "20 mins",
-    tags: ["breakfast", "sweet"],
-    ingredients: [
-      "1 cup flour",
-      "1 tbsp sugar",
-      "1 tsp baking powder",
-      "1/2 tsp baking soda",
-      "1 cup milk",
-      "1 egg",
-      "2 tbsp melted butter",
-      "Pinch of salt"
-    ],
-    steps: [
-      "Whisk dry ingredients in a bowl.",
-      "Mix milk, egg, and butter separately.",
-      "Combine wet and dry until just mixed.",
-      "Cook on a greased skillet until bubbles form.",
-      "Flip and cook until golden."
-    ],
-    tips: ["Rest batter 5 minutes for fluffier pancakes."]
-  },
-  {
-    id: "burrito",
-    name: "Rainbow Burrito Bowl",
-    description: "A fresh, crunchy bowl with bold flavors.",
-    image:
-      "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=1000&q=80",
-    servings: 2,
-    time: "25 mins",
-    tags: ["healthy", "bowl"],
-    ingredients: [
-      "1 cup cooked rice",
-      "1 can black beans, rinsed",
-      "1 cup corn",
-      "1 avocado, sliced",
-      "1 tomato, diced",
-      "1/2 red onion, sliced",
-      "1 tbsp lime juice",
-      "Cilantro and salsa"
-    ],
-    steps: [
-      "Warm rice and beans.",
-      "Arrange rice, beans, corn, avocado, tomato, and onion.",
-      "Drizzle lime juice and add salsa.",
-      "Top with cilantro.",
-      "Serve immediately."
-    ],
-    tips: ["Add grilled chicken for extra protein."]
-  }
-];
-
-const mealInput = document.getElementById("mealInput");
-const generateBtn = document.getElementById("generateBtn");
-const surpriseBtn = document.getElementById("surpriseBtn");
+const chatWindow = document.getElementById("chatWindow");
+const chatInput = document.getElementById("chatInput");
+const sendBtn = document.getElementById("sendBtn");
+const orderSummary = document.getElementById("orderSummary");
 const recipeTitle = document.getElementById("recipeTitle");
 const recipeMeta = document.getElementById("recipeMeta");
 const ingredientsList = document.getElementById("ingredientsList");
 const stepsList = document.getElementById("stepsList");
 const tipsBlock = document.getElementById("tipsBlock");
-const recipeImage = document.getElementById("recipeImage");
-const saveBtn = document.getElementById("saveBtn");
 const statusMessage = document.getElementById("statusMessage");
-const recipeList = document.getElementById("recipeList");
-const chatWindow = document.getElementById("chatWindow");
-const chatInput = document.getElementById("chatInput");
-const sendBtn = document.getElementById("sendBtn");
-const savedList = document.getElementById("savedList");
+const recipeImage = document.getElementById("recipeImage");
+const restaurantList = document.getElementById("restaurantList");
+const aiStatus = document.getElementById("aiStatus");
+const chipButtons = Array.from(document.querySelectorAll(".chip"));
 
 const API_BASE = "";
 const API_KEY = "";
 const DEFAULT_RECIPE_IMAGE =
   "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1100&q=80";
 
-let currentRecipe = null;
 let chatHistory = [];
 
-const ingredientHints = [
-  {
-    match: ["chicken", "tikka", "curry"],
-    main: "chicken",
-    flavor: "warm spices and creamy tomato"
-  },
-  {
-    match: ["salmon", "fish", "seafood"],
-    main: "salmon",
-    flavor: "lemon, garlic, and herbs"
-  },
-  {
-    match: ["pasta", "spaghetti", "noodle"],
-    main: "pasta",
-    flavor: "garlic, olive oil, and parmesan"
-  },
-  {
-    match: ["salad", "bowl", "veggie", "vegetable"],
-    main: "fresh vegetables",
-    flavor: "citrus and crunchy toppings"
-  },
-  {
-    match: ["pancake", "breakfast", "sweet"],
-    main: "fluffy pancakes",
-    flavor: "vanilla and maple syrup"
-  }
-];
+const SYSTEM_PROMPT = `
+You are a meal-planning assistant. Your ONLY goal is to figure out what the user wants to eat right now.
+Ask concise follow-up questions until you have: cuisine, budget, dietary restrictions, time, servings, and delivery vs cook.
+When you have enough info, generate:
+1) A restaurant order summary (dish name, sides, modifications, spice level, drink)
+2) A home-cook recipe version (ingredients, steps, time, servings)
+3) 3 restaurant suggestions (name, reason, contact method, url)
 
-const defaultRecipe = {
-  servings: 2,
-  time: "30 mins",
-  ingredients: [
-    "2 tbsp olive oil",
-    "1 onion, sliced",
-    "2 garlic cloves, minced",
-    "1 cup mixed vegetables",
-    "Salt and pepper",
-    "Fresh herbs"
-  ],
-  steps: [
-    "Prep all ingredients and heat a pan.",
-    "Saute onion and garlic until fragrant.",
-    "Add main ingredient and cook until tender.",
-    "Stir in vegetables and seasonings.",
-    "Finish with herbs and serve warm."
-  ],
-  tips: ["Taste as you go and adjust seasoning."]
-};
+Always reply in JSON with this structure:
+{
+  "assistantMessage": "string",
+  "order": {
+    "title": "string",
+    "items": ["string"],
+    "notes": ["string"]
+  },
+  "recipe": {
+    "title": "string",
+    "description": "string",
+    "time": "string",
+    "servings": number,
+    "ingredients": ["string"],
+    "steps": ["string"],
+    "tips": ["string"],
+    "image": "string"
+  },
+  "restaurants": [
+    { "name": "string", "reason": "string", "contact": "string", "url": "string" }
+  ]
+}
+If you still need info, keep order/recipe/restaurants empty but still include the keys.
+`;
+
+function getApiConfig() {
+  const base =
+    window.AI_RECIPE_API_BASE ||
+    localStorage.getItem("AI_RECIPE_API_BASE") ||
+    API_BASE;
+  const key =
+    window.AI_RECIPE_API_KEY ||
+    localStorage.getItem("AI_RECIPE_API_KEY") ||
+    API_KEY ||
+    "";
+  return { base, key };
+}
+
+function isAiConfigured() {
+  const { base } = getApiConfig();
+  return Boolean(base);
+}
+
+function setAiStatus() {
+  if (isAiConfigured()) {
+    aiStatus.textContent = "AI: Connected";
+  } else {
+    aiStatus.textContent = "AI: Not connected";
+  }
+}
+
+function setRecipeImage(src, altText) {
+  recipeImage.onerror = null;
+  recipeImage.src = src;
+  recipeImage.alt = altText || "Recipe image";
+  recipeImage.onerror = () => {
+    recipeImage.onerror = null;
+    recipeImage.src = DEFAULT_RECIPE_IMAGE;
+    recipeImage.alt = "Recipe image";
+  };
+}
+
+function pushChatMessage(text, isUser) {
+  const bubble = document.createElement("div");
+  bubble.className = `chat-message ${isUser ? "chat-user" : "chat-assistant"}`;
+  bubble.textContent = text;
+  chatWindow.appendChild(bubble);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+function setBusy(isBusy) {
+  sendBtn.disabled = isBusy;
+  chatInput.disabled = isBusy;
+  chipButtons.forEach((button) => {
+    button.disabled = isBusy;
+  });
+}
+
+function renderOrderSummary(order) {
+  if (!order || (!order.title && !order.items?.length)) {
+    orderSummary.innerHTML = "<p class=\"muted\">Order summary will appear here.</p>";
+    return;
+  }
+
+  const items = (order.items || []).map((item) => `<li>${item}</li>`).join("");
+  const notes = (order.notes || []).map((item) => `<li>${item}</li>`).join("");
+
+  orderSummary.innerHTML = `
+    <h3>${order.title || "Your order"}</h3>
+    ${items ? `<h4>Items</h4><ul class="list">${items}</ul>` : ""}
+    ${notes ? `<h4>Notes</h4><ul class="list">${notes}</ul>` : ""}
+  `;
+}
+
+function renderRecipe(recipe) {
+  if (!recipe || !recipe.title) {
+    recipeTitle.textContent = "Awaiting your conversation";
+    recipeMeta.textContent = "The assistant will craft a recipe based on your order.";
+    ingredientsList.innerHTML = "";
+    stepsList.innerHTML = "";
+    tipsBlock.textContent = "";
+    setRecipeImage(DEFAULT_RECIPE_IMAGE, "Recipe preview");
+    return;
+  }
+
+  recipeTitle.textContent = recipe.title;
+  recipeMeta.textContent = `${recipe.description || "Recipe details"} • ${recipe.time || "30 mins"} • Serves ${recipe.servings || 2}`;
+  setRecipeImage(recipe.image || DEFAULT_RECIPE_IMAGE, recipe.title);
+  ingredientsList.innerHTML = (recipe.ingredients || [])
+    .map((item) => `<li>${item}</li>`)
+    .join("");
+  stepsList.innerHTML = (recipe.steps || [])
+    .map((step) => `<li>${step}</li>`)
+    .join("");
+  tipsBlock.textContent = (recipe.tips || []).join(" ");
+}
+
+function renderRestaurants(restaurants) {
+  if (!restaurants || !restaurants.length) {
+    restaurantList.innerHTML =
+      "<p class=\"muted\">Restaurants will be suggested after your order is created.</p>";
+    return;
+  }
+
+  restaurantList.innerHTML = restaurants
+    .map(
+      (item) => `
+      <div class="restaurant-card">
+        <h4>${item.name || "Restaurant"}</h4>
+        <p class="muted">${item.reason || ""}</p>
+        ${item.contact ? `<p>Contact: ${item.contact}</p>` : ""}
+        ${item.url ? `<a href="${item.url}" target="_blank" rel="noopener">Open website</a>` : ""}
+      </div>
+    `
+    )
+    .join("");
+}
+
+function parseAiPayload(text) {
+  if (!text) return { assistantMessage: "No response received." };
+
+  const codeMatch = text.match(/```json([\s\S]*?)```/i);
+  if (codeMatch) {
+    try {
+      return JSON.parse(codeMatch[1].trim());
+    } catch (error) {
+      return { assistantMessage: text };
+    }
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+    return { assistantMessage: text };
+  }
+}
+
+async function requestChatFromApi(messages) {
+  const { base, key } = getApiConfig();
+  if (!base) {
+    throw new Error("AI_NOT_CONFIGURED");
+  }
+
+  const response = await fetch(`${base}/api/chat`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(key ? { Authorization: `Bearer ${key}` } : {})
+    },
+    body: JSON.stringify({ messages })
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.message || "Chat request failed.");
+  }
+
+  const payload = await response.json();
+  return payload.reply || payload.message || "";
+}
+
+function buildChatHistory(userText) {
+  const baseMessages = [
+    { role: "system", content: SYSTEM_PROMPT.trim() }
+  ];
+  return [...baseMessages, ...chatHistory, { role: "user", content: userText }];
+}
+
+async function handleSendMessage(text) {
+  if (!text) return;
+
+  pushChatMessage(text, true);
+  chatInput.value = "";
+  statusMessage.textContent = "Thinking...";
+  setBusy(true);
+
+  try {
+    const history = buildChatHistory(text);
+    const reply = await requestChatFromApi(history);
+    const parsed = parseAiPayload(reply);
+    pushChatMessage(parsed.assistantMessage || reply, false);
+
+    chatHistory = [
+      ...chatHistory,
+      { role: "user", content: text },
+      { role: "assistant", content: parsed.assistantMessage || reply }
+    ].slice(-12);
+
+    renderOrderSummary(parsed.order || {});
+    renderRecipe(parsed.recipe || {});
+    renderRestaurants(parsed.restaurants || []);
+    statusMessage.textContent = "";
+  } catch (error) {
+    if (error.message === "AI_NOT_CONFIGURED") {
+      pushChatMessage(
+        "AI is not configured. Set AI_RECIPE_API_BASE in localStorage to connect.",
+        false
+      );
+    } else {
+      pushChatMessage("AI request failed. Please try again.", false);
+    }
+    statusMessage.textContent = "";
+  } finally {
+    setBusy(false);
+  }
+}
+
+sendBtn.addEventListener("click", () => {
+  handleSendMessage(chatInput.value.trim());
+});
+
+chatInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    sendBtn.click();
+  }
+});
+
+chipButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    handleSendMessage(button.dataset.prompt || "");
+  });
+});
+
+setAiStatus();
+renderOrderSummary({});
+renderRecipe({});
+renderRestaurants([]);
+pushChatMessage(
+  "Tell me what you want to eat right now. I will build your order and recipe.",
+  false
+);
 
 function recipeImageUrl(recipe) {
   if (recipe.image) return recipe.image;

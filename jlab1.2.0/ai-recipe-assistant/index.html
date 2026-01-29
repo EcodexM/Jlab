@@ -15,78 +15,81 @@
                 <div class="logo" aria-label="JLab logo">JLab</div>
                 <div>
                     <h1>AI Recipe Assistant</h1>
-                    <p>
-                        Tell me what you want to cook, get a recipe, or ask for a surprise.
-                    </p>
+                    <p>Tell the assistant what you want to eat. It builds a restaurant order and a home recipe.</p>
                 </div>
             </div>
+            <div class="status-pill" id="aiStatus">AI: Not connected</div>
         </div>
     </header>
 
-    <main class="container">
-        <section class="panel">
-            <h2>What should we cook today?</h2>
-            <div class="prompt-row">
-                <input id="mealInput" type="text" placeholder="E.g. creamy mushroom pasta" aria-label="Meal name" />
-                <button id="generateBtn" class="primary">Create recipe</button>
-                <button id="surpriseBtn" class="ghost">Surprise me</button>
-            </div>
-            <p class="hint">
-                Try searching for a dish, or choose one from the list below.
-            </p>
-        </section>
-
-        <section class="panel recipe-panel">
-            <div class="recipe-header">
+    <main class="container main-grid">
+        <section class="panel chat-panel">
+            <div class="panel-header">
                 <div>
-                    <h2 id="recipeTitle">Ready when you are</h2>
-                    <p id="recipeMeta" class="meta">
-                        Use the prompt above to generate a recipe.
-                    </p>
+                    <h2>Plan your meal with AI</h2>
+                    <p class="muted">The assistant asks questions, builds your order, and turns it into a recipe.</p>
                 </div>
-                <button id="saveBtn" class="primary" disabled>
-                    Mark cooked &amp; save
-                </button>
-            </div>
-
-            <div class="recipe-visual">
-                <img id="recipeImage"
-                    src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1100&q=80"
-                    alt="Recipe preview" />
-            </div>
-
-            <div class="recipe-columns">
-                <div>
-                    <h3>Ingredients</h3>
-                    <ul id="ingredientsList" class="list"></ul>
-                </div>
-                <div>
-                    <h3>Steps</h3>
-                    <ol id="stepsList" class="list"></ol>
+                <div class="chip-row">
+                    <button class="chip" data-prompt="Breakfast idea for two">Breakfast</button>
+                    <button class="chip" data-prompt="Quick lunch under 30 minutes">Lunch</button>
+                    <button class="chip" data-prompt="Dinner for guests">Dinner</button>
+                    <button class="chip" data-prompt="Vegetarian meal">Vegetarian</button>
                 </div>
             </div>
-            <div id="tipsBlock" class="tips"></div>
-            <p id="statusMessage" class="status"></p>
-        </section>
 
-        <section class="panel">
-            <h2>Pre-installed recipes</h2>
-            <div id="recipeList" class="grid"></div>
-        </section>
-
-        <section class="panel">
-            <h2>Chat with the assistant</h2>
             <div id="chatWindow" class="chat-window" aria-live="polite"></div>
+
             <div class="chat-row">
-                <input id="chatInput" type="text" placeholder="Ask for recommendations, substitutions, or tips..."
+                <input id="chatInput" type="text" placeholder="Tell me what you want to eat..."
                     aria-label="Chat message" />
                 <button id="sendBtn" class="primary">Send</button>
             </div>
+            <p class="hint">Tip: include budget, time, cuisine, and dietary preferences.</p>
         </section>
 
-        <section class="panel">
-            <h2>Saved recipes</h2>
-            <div id="savedList" class="stack"></div>
+        <section class="panel summary-panel">
+            <div class="summary-block">
+                <h2>Order summary</h2>
+                <div id="orderSummary" class="summary-card">
+                    <p class="muted">Your AI-generated order will appear here.</p>
+                </div>
+            </div>
+
+            <div class="summary-block">
+                <h2>Home recipe</h2>
+                <div class="recipe-header">
+                    <div>
+                        <h3 id="recipeTitle">Awaiting your conversation</h3>
+                        <p id="recipeMeta" class="meta">The assistant will craft a recipe based on your order.</p>
+                    </div>
+                </div>
+
+                <div class="recipe-visual">
+                    <img id="recipeImage"
+                        src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1100&q=80"
+                        alt="Recipe preview" />
+                </div>
+
+                <div class="recipe-columns">
+                    <div>
+                        <h4>Ingredients</h4>
+                        <ul id="ingredientsList" class="list"></ul>
+                    </div>
+                    <div>
+                        <h4>Steps</h4>
+                        <ol id="stepsList" class="list"></ol>
+                    </div>
+                </div>
+                <div id="tipsBlock" class="tips"></div>
+                <p id="statusMessage" class="status"></p>
+            </div>
+
+            <div class="summary-block">
+                <h2>Nearby restaurant suggestions</h2>
+                <div id="restaurantList" class="stack">
+                    <p class="muted">Restaurants will be suggested after your order is created.</p>
+                </div>
+            </div>
         </section>
     </main>
 
