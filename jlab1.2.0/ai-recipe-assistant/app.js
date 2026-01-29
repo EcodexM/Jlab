@@ -275,12 +275,7 @@ function getApiConfig() {
     window.AI_RECIPE_API_BASE ||
     localStorage.getItem("AI_RECIPE_API_BASE") ||
     API_BASE;
-  const key =
-    window.AI_RECIPE_API_KEY ||
-    localStorage.getItem("AI_RECIPE_API_KEY") ||
-    API_KEY ||
-    "";
-  return { base, key };
+  return { base };
 }
 
 function isAiConfigured() {
