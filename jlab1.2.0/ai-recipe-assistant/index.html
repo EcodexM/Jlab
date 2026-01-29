@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Recipe Assistant</title>
+    <link rel="stylesheet" href="/ai-recipe-assistant/styles.css" />
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container header-row">
+            <div class="logo-wrap">
+                <div class="logo" aria-label="JLab logo">JLab</div>
+                <div>
+                    <h1>AI Recipe Assistant</h1>
+                    <p>
+                        Tell me what you want to cook, get a recipe, or ask for a surprise.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="panel">
+            <h2>What should we cook today?</h2>
+            <div class="prompt-row">
+                <input id="mealInput" type="text" placeholder="E.g. creamy mushroom pasta" aria-label="Meal name" />
+                <button id="generateBtn" class="primary">Create recipe</button>
+                <button id="surpriseBtn" class="ghost">Surprise me</button>
+            </div>
+            <p class="hint">
+                Try searching for a dish, or choose one from the list below.
+            </p>
+        </section>
+
+        <section class="panel recipe-panel">
+            <div class="recipe-header">
+                <div>
+                    <h2 id="recipeTitle">Ready when you are</h2>
+                    <p id="recipeMeta" class="meta">
+                        Use the prompt above to generate a recipe.
+                    </p>
+                </div>
+                <button id="saveBtn" class="primary" disabled>
+                    Mark cooked &amp; save
+                </button>
+            </div>
+
+            <div class="recipe-visual">
+                <img id="recipeImage"
+                    src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1100&q=80"
+                    alt="Recipe preview" />
+            </div>
+
+            <div class="recipe-columns">
+                <div>
+                    <h3>Ingredients</h3>
+                    <ul id="ingredientsList" class="list"></ul>
+                </div>
+                <div>
+                    <h3>Steps</h3>
+                    <ol id="stepsList" class="list"></ol>
+                </div>
+            </div>
+            <div id="tipsBlock" class="tips"></div>
+            <p id="statusMessage" class="status"></p>
+        </section>
+
+        <section class="panel">
+            <h2>Pre-installed recipes</h2>
+            <div id="recipeList" class="grid"></div>
+        </section>
+
+        <section class="panel">
+            <h2>Chat with the assistant</h2>
+            <div id="chatWindow" class="chat-window" aria-live="polite"></div>
+            <div class="chat-row">
+                <input id="chatInput" type="text" placeholder="Ask for recommendations, substitutions, or tips..."
+                    aria-label="Chat message" />
+                <button id="sendBtn" class="primary">Send</button>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Saved recipes</h2>
+            <div id="savedList" class="stack"></div>
+        </section>
+    </main>
+
+    <script src="/ai-recipe-assistant/app.js"></script>
+</body>
+
+</html>
