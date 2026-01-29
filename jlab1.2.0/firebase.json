@@ -76,7 +76,10 @@
     "rewrites": [
       {
         "source": "/api/chat",
-        "function": "aiChat"
+        "function": {
+          "functionId": "aiChat",
+          "region": "us-central1"
+        }
       }
     ]
   }
