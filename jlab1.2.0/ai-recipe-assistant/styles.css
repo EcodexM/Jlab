@@ -271,6 +271,66 @@ button {
   font-weight: 600;
 }
 
+.hidden {
+  display: none;
+}
+
+.subscription-panel {
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  background: #f5f9ff;
+}
+
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.plan-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid var(--outline);
+  padding: 16px;
+  display: grid;
+  gap: 10px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.plan-card ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.plan-card .price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin: 0;
+}
+
+.plan-highlight {
+  border: 2px solid rgba(59, 130, 246, 0.4);
+  transform: translateY(-4px);
+}
+
+.plan-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.plan-button:hover {
+  background: var(--primary-dark);
+}
+
 @media (max-width: 960px) {
   .main-grid {
     grid-template-columns: 1fr;

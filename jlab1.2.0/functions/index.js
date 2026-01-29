@@ -1,4 +1,12 @@
 const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+const crypto = require("crypto");
+
+if (!admin.apps.length) {
+    admin.initializeApp();
+}
+
+const db = admin.firestore();
 
 const SYSTEM_PROMPT = `
 You are a meal-ordering assistant. Your ONLY job is to help the user decide what to eat right now.
@@ -36,11 +44,32 @@ If you still need info, keep order/recipe/restaurants empty but still include th
 
 const OPENAI_URL = "https://api.openai.com/v1/chat/completions";
 const MODEL = "gpt-4o-mini";
+const RECIPE_LIMIT = 3;
 
 function setCors(res) {
     res.set("Access-Control-Allow-Origin", "*");
     res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
     res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+}
+
+function getClientIp(req) {
+    const forwarded = req.headers["x-forwarded-for"];
+    if (forwarded) {
+        return forwarded.split(",")[0].trim();
+    }
+    return req.ip || "unknown";
+}
+
+function hashIp(ip) {
+    return crypto.createHash("sha256").update(ip).digest("hex");
+}
+
+async function getUsage(docRef) {
+    const snap = await docRef.get();
+    if (!snap.exists) {
+        return { count: 0 };
+    }
+    return snap.data();
 }
 
 exports.aiChat = functions.https.onRequest(async (req, res) => {
@@ -63,6 +92,23 @@ exports.aiChat = functions.https.onRequest(async (req, res) => {
     const { messages } = req.body || {};
     if (!Array.isArray(messages)) {
         return res.status(400).json({ error: "Invalid messages payload." });
+    }
+
+    const ip = getClientIp(req);
+    const ipHash = hashIp(ip);
+    const usageRef = db.collection("aiRecipeUsage").doc(ipHash);
+
+    try {
+        const usage = await getUsage(usageRef);
+        if (usage.count >= RECIPE_LIMIT) {
+            return res.status(429).json({
+                code: "LIMIT_REACHED",
+                error: "LIMIT_REACHED",
+                message: "Free recipe limit reached."
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: "Usage check failed." });
     }
 
     const payload = {
@@ -96,6 +142,23 @@ exports.aiChat = functions.https.onRequest(async (req, res) => {
             data.choices[0] &&
             data.choices[0].message &&
             data.choices[0].message.content;
+        let shouldCount = false;
+        try {
+            const parsed = JSON.parse(content || "{}");
+            shouldCount = Boolean(parsed.recipe && parsed.recipe.title);
+        } catch (error) {
+            shouldCount = false;
+        }
+
+        if (shouldCount) {
+            await usageRef.set(
+                {
+                    count: admin.firestore.FieldValue.increment(1),
+                    updatedAt: admin.firestore.FieldValue.serverTimestamp()
+                },
+                { merge: true }
+            );
+        }
 
         return res.status(200).json({ reply: content || "" });
     } catch (error) {
