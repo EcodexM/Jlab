@@ -2,7 +2,7 @@
   "name": "ai-recipe-functions",
   "private": true,
   "engines": {
-    "node": "18"
+    "node": "20"
   },
   "dependencies": {
     "firebase-admin": "^12.1.0",
