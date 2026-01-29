@@ -14,21 +14,21 @@ const aiStatus = document.getElementById("aiStatus");
 const chipButtons = Array.from(document.querySelectorAll(".chip"));
 
 const API_BASE = "";
-const API_KEY = "";
 const DEFAULT_RECIPE_IMAGE =
   "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1100&q=80";
 
 let chatHistory = [];
 
 const SYSTEM_PROMPT = `
-You are a meal-planning assistant. Your ONLY goal is to figure out what the user wants to eat right now.
-Ask concise follow-up questions until you have: cuisine, budget, dietary restrictions, time, servings, and delivery vs cook.
-When you have enough info, generate:
+You are a meal-ordering assistant. Your ONLY job is to help the user decide what to eat right now.
+If the user goes off-topic, politely steer them back to food ordering.
+Ask short follow-up questions until you have: cuisine, budget, dietary restrictions, time, servings, and delivery vs cook.
+Once you have enough, produce:
 1) A restaurant order summary (dish name, sides, modifications, spice level, drink)
 2) A home-cook recipe version (ingredients, steps, time, servings)
 3) 3 restaurant suggestions (name, reason, contact method, url)
 
-Always reply in JSON with this structure:
+Always reply in JSON with this exact structure:
 {
   "assistantMessage": "string",
   "order": {
@@ -58,25 +58,15 @@ function getApiConfig() {
     window.AI_RECIPE_API_BASE ||
     localStorage.getItem("AI_RECIPE_API_BASE") ||
     API_BASE;
-  const key =
-    window.AI_RECIPE_API_KEY ||
-    localStorage.getItem("AI_RECIPE_API_KEY") ||
-    API_KEY ||
-    "";
-  return { base, key };
+  return { base };
 }
 
 function isAiConfigured() {
-  const { base } = getApiConfig();
-  return Boolean(base);
+  return true;
 }
 
 function setAiStatus() {
-  if (isAiConfigured()) {
-    aiStatus.textContent = "AI: Connected";
-  } else {
-    aiStatus.textContent = "AI: Not connected";
-  }
+  aiStatus.textContent = isAiConfigured() ? "AI: Connected" : "AI: Not connected";
 }
 
 function setRecipeImage(src, altText) {
@@ -186,16 +176,13 @@ function parseAiPayload(text) {
 }
 
 async function requestChatFromApi(messages) {
-  const { base, key } = getApiConfig();
-  if (!base) {
-    throw new Error("AI_NOT_CONFIGURED");
-  }
+  const { base } = getApiConfig();
+  const endpoint = base ? `${base.replace(/\/$/, "")}/api/chat` : "/api/chat";
 
-  const response = await fetch(`${base}/api/chat`, {
+  const response = await fetch(endpoint, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
-      ...(key ? { Authorization: `Bearer ${key}` } : {})
+      "Content-Type": "application/json"
     },
     body: JSON.stringify({ messages })
   });
@@ -241,14 +228,7 @@ async function handleSendMessage(text) {
     renderRestaurants(parsed.restaurants || []);
     statusMessage.textContent = "";
   } catch (error) {
-    if (error.message === "AI_NOT_CONFIGURED") {
-      pushChatMessage(
-        "AI is not configured. Set AI_RECIPE_API_BASE in localStorage to connect.",
-        false
-      );
-    } else {
-      pushChatMessage("AI request failed. Please try again.", false);
-    }
+    pushChatMessage("AI request failed. Please try again.", false);
     statusMessage.textContent = "";
   } finally {
     setBusy(false);

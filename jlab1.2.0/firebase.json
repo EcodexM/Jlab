@@ -1,4 +1,7 @@
 {
+  "functions": {
+    "source": "functions"
+  },
   "hosting": {
     "public": ".",
     "ignore": [
@@ -68,6 +71,12 @@
             "value": "max-age=31536000; includeSubDomains; preload"
           }
         ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/api/chat",
+        "function": "aiChat"
       }
     ]
   }
