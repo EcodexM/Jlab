@@ -1,6 +1,7 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const crypto = require("crypto");
+const Stripe = require("stripe");
 
 if (!admin.apps.length) {
     admin.initializeApp();
@@ -45,6 +46,7 @@ If you still need info, keep order/recipe/restaurants empty but still include th
 const OPENAI_URL = "https://api.openai.com/v1/chat/completions";
 const MODEL = "gpt-4o-mini";
 const RECIPE_LIMIT = 3;
+const STRIPE_CURRENCY = "usd";
 
 function setCors(res) {
     res.set("Access-Control-Allow-Origin", "*");
@@ -67,9 +69,13 @@ function hashIp(ip) {
 async function getUsage(docRef) {
     const snap = await docRef.get();
     if (!snap.exists) {
-        return { count: 0 };
+        return { count: 0, date: null };
     }
     return snap.data();
+}
+
+function getTodayKey() {
+    return new Date().toISOString().slice(0, 10);
 }
 
 exports.aiChat = functions.https.onRequest(async (req, res) => {
@@ -97,10 +103,12 @@ exports.aiChat = functions.https.onRequest(async (req, res) => {
     const ip = getClientIp(req);
     const ipHash = hashIp(ip);
     const usageRef = db.collection("aiRecipeUsage").doc(ipHash);
+    const todayKey = getTodayKey();
 
     try {
         const usage = await getUsage(usageRef);
-        if (usage.count >= RECIPE_LIMIT) {
+        const count = usage.date === todayKey ? usage.count || 0 : 0;
+        if (count >= RECIPE_LIMIT) {
             return res.status(429).json({
                 code: "LIMIT_REACHED",
                 error: "LIMIT_REACHED",
@@ -154,6 +162,7 @@ exports.aiChat = functions.https.onRequest(async (req, res) => {
             await usageRef.set(
                 {
                     count: admin.firestore.FieldValue.increment(1),
+                    date: todayKey,
                     updatedAt: admin.firestore.FieldValue.serverTimestamp()
                 },
                 { merge: true }
@@ -163,5 +172,83 @@ exports.aiChat = functions.https.onRequest(async (req, res) => {
         return res.status(200).json({ reply: content || "" });
     } catch (error) {
         return res.status(500).json({ error: "Server error." });
+    }
+});
+
+exports.resetUsage = functions.https.onRequest(async (req, res) => {
+    setCors(res);
+
+    if (req.method === "OPTIONS") {
+        return res.status(204).send("");
+    }
+
+    if (req.method !== "POST") {
+        return res.status(405).json({ error: "Method not allowed." });
+    }
+
+    const config = functions.config();
+    const token = config.admin && config.admin.token;
+    const provided = req.headers.authorization?.replace("Bearer ", "") || "";
+    if (!token || provided !== token) {
+        return res.status(403).json({ error: "Unauthorized." });
+    }
+
+    try {
+        const snapshot = await db.collection("aiRecipeUsage").get();
+        const batch = db.batch();
+        snapshot.forEach((doc) => batch.delete(doc.ref));
+        await batch.commit();
+        return res.status(200).json({ ok: true });
+    } catch (error) {
+        return res.status(500).json({ error: "Reset failed." });
+    }
+});
+
+exports.createCheckout = functions.https.onRequest(async (req, res) => {
+    setCors(res);
+
+    if (req.method === "OPTIONS") {
+        return res.status(204).send("");
+    }
+
+    if (req.method !== "POST") {
+        return res.status(405).json({ error: "Method not allowed." });
+    }
+
+    const config = functions.config();
+    const stripeKey = config.stripe && config.stripe.secret;
+    const priceStarter = config.stripe && config.stripe.price_starter;
+    const priceChef = config.stripe && config.stripe.price_chef;
+    const priceTeam = config.stripe && config.stripe.price_team;
+
+    if (!stripeKey || !priceStarter || !priceChef || !priceTeam) {
+        return res.status(500).json({ error: "Stripe is not configured." });
+    }
+
+    const stripe = Stripe(stripeKey);
+    const { plan } = req.body || {};
+
+    const priceMap = {
+        starter: priceStarter,
+        chef: priceChef,
+        team: priceTeam
+    };
+
+    const priceId = priceMap[plan];
+    if (!priceId) {
+        return res.status(400).json({ error: "Invalid plan." });
+    }
+
+    try {
+        const session = await stripe.checkout.sessions.create({
+            mode: "subscription",
+            line_items: [{ price: priceId, quantity: 1 }],
+            success_url: "https://jlab-ebe8d.web.app/ai-recipe-assistant?success=true",
+            cancel_url: "https://jlab-ebe8d.web.app/ai-recipe-assistant?canceled=true",
+            currency: STRIPE_CURRENCY
+        });
+        return res.status(200).json({ url: session.url });
+    } catch (error) {
+        return res.status(500).json({ error: "Checkout failed." });
     }
 });

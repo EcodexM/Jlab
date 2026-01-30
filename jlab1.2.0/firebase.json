@@ -80,6 +80,20 @@
           "functionId": "aiChat",
           "region": "us-central1"
         }
+      },
+      {
+        "source": "/api/subscribe",
+        "function": {
+          "functionId": "createCheckout",
+          "region": "us-central1"
+        }
+      },
+      {
+        "source": "/api/reset-usage",
+        "function": {
+          "functionId": "resetUsage",
+          "region": "us-central1"
+        }
       }
     ]
   }

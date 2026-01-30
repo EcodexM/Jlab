@@ -12,6 +12,7 @@ const recipeImage = document.getElementById("recipeImage");
 const restaurantList = document.getElementById("restaurantList");
 const aiStatus = document.getElementById("aiStatus");
 const chipButtons = Array.from(document.querySelectorAll(".chip"));
+const planButtons = Array.from(document.querySelectorAll(".plan-button"));
 const subscriptionPanel = document.getElementById("subscriptionPanel");
 
 const API_ENDPOINT = "/api/chat";
@@ -167,6 +168,43 @@ async function requestChatFromApi(messages) {
     return payload.reply || payload.message || payload;
 }
 
+async function requestCheckout(plan) {
+    const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ plan })
+    });
+
+    if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        throw new Error(error.error || error.message || "Subscription failed.");
+    }
+
+    return response.json();
+}
+
+async function handleSubscribe(plan) {
+    if (!plan) return;
+    setBusy(true);
+    statusMessage.textContent = "Opening checkout...";
+    try {
+        const payload = await requestCheckout(plan);
+        if (payload && payload.url) {
+            window.location.href = payload.url;
+            return;
+        }
+        throw new Error("Missing checkout URL.");
+    } catch (error) {
+        pushChatMessage(
+            "Payment setup is not configured yet. Please contact support.",
+            false
+        );
+        statusMessage.textContent = "";
+    } finally {
+        setBusy(false);
+    }
+}
+
 async function handleSendMessage(text) {
     if (!text) return;
 
@@ -225,6 +263,12 @@ chatInput.addEventListener("keydown", (event) => {
 chipButtons.forEach((button) => {
     button.addEventListener("click", () => {
         handleSendMessage(button.dataset.prompt || "");
+    });
+});
+
+planButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        handleSubscribe(button.dataset.plan);
     });
 });
 
