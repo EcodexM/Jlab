@@ -23,6 +23,8 @@
         </div>
     </header>
 
+    <script src="/payment-processing.js"></script>
+
     <main class="container main-grid">
         <section class="panel chat-panel">
             <div class="panel-header">
@@ -97,6 +99,9 @@
                 <p class="muted">
                     You have reached the free limit of 3 recipes. Choose a plan to keep generating orders and recipes.
                 </p>
+                <stripe-pricing-table pricing-table-id="prctbl_1Sv8TIEXymNXSzQjezfNhjIq"
+                    publishable-key="pk_live_51Sv7y9EXymNXSzQj9Poz8ttCFypmuAqp0isLyiQsKM8OmMS6RFqGWUMTNFTbixNpQlYJMMKnLztYuoOxog4a1wYu0059B6lfaB">
+                </stripe-pricing-table>
                 <div class="plan-grid">
                     <div class="plan-card">
                         <h3>Starter</h3>

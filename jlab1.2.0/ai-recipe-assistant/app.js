@@ -168,32 +168,15 @@ async function requestChatFromApi(messages) {
     return payload.reply || payload.message || payload;
 }
 
-async function requestCheckout(plan) {
-    const response = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan })
-    });
-
-    if (!response.ok) {
-        const error = await response.json().catch(() => ({}));
-        throw new Error(error.error || error.message || "Subscription failed.");
-    }
-
-    return response.json();
-}
-
 async function handleSubscribe(plan) {
     if (!plan) return;
     setBusy(true);
     statusMessage.textContent = "Opening checkout...";
     try {
-        const payload = await requestCheckout(plan);
-        if (payload && payload.url) {
-            window.location.href = payload.url;
-            return;
+        if (!window.JLabPayments || !window.JLabPayments.subscribe) {
+            throw new Error("Payment module not loaded.");
         }
-        throw new Error("Missing checkout URL.");
+        await window.JLabPayments.subscribe(plan);
     } catch (error) {
         pushChatMessage(
             "Payment setup is not configured yet. Please contact support.",

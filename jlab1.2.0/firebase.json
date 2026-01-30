@@ -8,6 +8,8 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**",
+      "**/*.md",
+      "**/*.txt",
       "src/**",
       "package.json",
       "package-lock.json",
@@ -20,7 +22,9 @@
       "CSS-FIX-SOLUTION.md",
       "DOMAIN-CACHE-ISSUE.md",
       "AI-LAB-TRANSFORMATION.md",
-      ".env.local"
+      ".env.local",
+      "SECRETS.local.md",
+      "functions/.runtimeconfig.json"
     ],
     "cleanUrls": true,
     "trailingSlash": false,
